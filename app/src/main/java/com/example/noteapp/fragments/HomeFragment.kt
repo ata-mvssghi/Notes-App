@@ -44,9 +44,12 @@ class HomeFragment : Fragment() ,SearchView.OnQueryTextListener{
         notesViewModel = (activity as MainActivity).noteViewModel
         setUpRecyclerView()
         setHasOptionsMenu(true)
-        binding.floatingActionButton.setOnClickListener{
+        binding.add.setOnClickListener{
             it.findNavController()
                 .navigate(R.id.action_homeFragment_to_newNoteFragment)
+        }
+        binding.settings.setOnClickListener{
+            it.findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)
         }
     }
 
@@ -87,7 +90,6 @@ class HomeFragment : Fragment() ,SearchView.OnQueryTextListener{
         val mMenuSearch = menu.findItem(R.id.search).actionView as SearchView
         mMenuSearch.isSubmitButtonEnabled = false
         mMenuSearch.setOnCloseListener {
-//            setUpRecyclerView()
             Log.i("note","close")
             //this false make the search view disables and gone
             false
