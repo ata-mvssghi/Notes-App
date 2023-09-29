@@ -37,12 +37,13 @@
                     android:layout_weight="200"
                     android:textColor="@color/black"
                     android:text="Note Title"
+                    android:fontFamily="@font/forum_regular"
                     android:textStyle="bold"
-                    android:textSize="20sp"/>
+                    android:textSize="24sp"/>
 
                 <View
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:id="@+id/ib_color"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"

@@ -42,8 +42,8 @@ class RecyclerViewAdapter:RecyclerView.Adapter<RecyclerViewAdapter.NoteViewHolde
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val currentNote=differ.currentList[position]
-       holder.binding.tvNoteBody.text=currentNote.noteTitle
-        holder.binding.tvNoteTitle.text=currentNote.noteBody
+       holder.binding.tvNoteBody.text=currentNote.noteBody
+        holder.binding.tvNoteTitle.text=currentNote.noteTitle
         val random= Random.Default
         val color= Color.argb(255,random.nextInt(256),random.nextInt(256),random.nextInt(256))
         holder.binding.ibColor.setBackgroundColor(color)

@@ -41,7 +41,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/bangers_regular"
                 android:text="No Note Available!!"
-                android:textColor="#1E1D1D"
+                android:textColor="#204C25"
                 android:textSize="20sp" />
         </androidx.cardview.widget.CardView>
 
