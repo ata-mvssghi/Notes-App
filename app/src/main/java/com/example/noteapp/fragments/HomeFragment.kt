@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() ,SearchView.OnQueryTextListener{
-     var _binding:FragmentHomeBinding?=null
+    var _binding:FragmentHomeBinding?=null
     val binding get()=_binding!!
     lateinit var notesViewModel: NoteViewModel
     lateinit var noteAdapter: RecyclerViewAdapter
@@ -51,7 +51,7 @@ class HomeFragment : Fragment() ,SearchView.OnQueryTextListener{
     }
 
     fun setUpRecyclerView(){
-       noteAdapter= RecyclerViewAdapter()
+        noteAdapter= RecyclerViewAdapter()
         binding.recyclerView.layoutManager=StaggeredGridLayoutManager(
             2,
             StaggeredGridLayoutManager.VERTICAL
@@ -60,8 +60,8 @@ class HomeFragment : Fragment() ,SearchView.OnQueryTextListener{
         binding.recyclerView.adapter=noteAdapter
         activity?.let {
             notesViewModel.getALlNotes().observe(viewLifecycleOwner
-            ,{
-                notes->noteAdapter.differ.submitList(notes)
+                ,{
+                        notes->noteAdapter.differ.submitList(notes)
                     updateUi(notes)
                 }
             )
@@ -87,7 +87,7 @@ class HomeFragment : Fragment() ,SearchView.OnQueryTextListener{
         val mMenuSearch = menu.findItem(R.id.search).actionView as SearchView
         mMenuSearch.isSubmitButtonEnabled = false
         mMenuSearch.setOnCloseListener {
-            setUpRecyclerView()
+//            setUpRecyclerView()
             Log.i("note","close")
             //this false make the search view disables and gone
             false
@@ -112,7 +112,7 @@ class HomeFragment : Fragment() ,SearchView.OnQueryTextListener{
     private fun searchNote(query: String?){
         Log.i("note","the query=$query")
         if(query!=null) {
-        val searchQuery = "%$query"
+            val searchQuery = "%$query"
             notesViewModel.searchNote(searchQuery).observe(
                 this,
                 { list -> noteAdapter.differ.submitList(list.reversed()) }
