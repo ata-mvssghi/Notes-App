@@ -1,0 +1,29 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="myPref">
+    <Preference
+        android:key="backButton"
+        android:icon="@drawable/back"
+        android:title="BACK"
+        />
+    <PreferenceCategory android:title="TEXT"
+        app:icon="@drawable/baseline_settings_suggest_24">
+        <ListPreference
+            app:entries="@array/text_size"
+            app:entryValues="@array/text_size"
+            app:key="text_size"
+            app:title="Text Size"
+            app:useSimpleSummaryProvider="true"
+            app:defaultValue="Medium" />
+    </PreferenceCategory>
+        <PreferenceCategory android:title="CUSTOMIZE STYLE"
+            android:icon="@drawable/baseline_style_24">
+        <ListPreference
+            app:entries="@array/theme_list"
+            app:entryValues="@array/theme_list"
+            app:key="color_theme"
+            app:title="THEME"
+            app:useSimpleSummaryProvider="true"
+            app:defaultValue="Light" />
+    </PreferenceCategory>
+</PreferenceScreen>
