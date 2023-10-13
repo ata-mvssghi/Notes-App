@@ -14,6 +14,7 @@ import com.example.noteapp.databinding.FragmentUpdateNoteBinding
 import com.example.noteapp.room.Note
 import com.example.noteapp.viewModel.NoteViewModel
 import com.example.noteapp.fragments.UpdateNoteFragmentArgs
+import com.example.noteapp.room.Priority
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -27,6 +28,7 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
 
     private lateinit var currentNote : Note
 
+    lateinit var priority: Priority
     // Since the Update Note Fragment contains arguments in nav_graph
     private val args: UpdateNoteFragmentArgs by navArgs()
 
@@ -53,18 +55,46 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         notesViewModel = (activity as MainActivity).noteViewModel
-        currentNote = args.note!!
+        currentNote = args.note
+
+        priority = currentNote.priority!!
 
         binding.updateSubject.setText(currentNote.noteTitle)
         binding.discription.setText(currentNote.noteBody)
+        val radioGroup = binding.radioGroupUpdate
 
+        when(currentNote.priority) {
+            Priority.HIGH->{
+                radioGroup.check(R.id.radioButtonHighU)
+            }
+            Priority.MEDIUM ->{
+                radioGroup.check(R.id.radioButtonMediumU)
+            }
+            Priority.LOW ->{
+                radioGroup.check(R.id.radioButtonLowU)
+            }
+
+            else -> {radioGroup.check(R.id.radioButtonMediumU)}
+        }
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.radioButtonHigh -> {
+                    priority = Priority.HIGH
+                }
+                R.id.radioButtonMedium -> {
+                    priority = Priority.MEDIUM
+                }
+                R.id.radioButtonLow -> {
+                    priority = Priority.LOW
+                }
+            }
+        }
         // if the user update the note
         binding.floatingActionButton2.setOnClickListener{
             val title = binding.updateSubject.text.toString().trim()
             val body = binding.discription.text.toString().trim()
-
             if (title.isNotEmpty()){
-                val note = Note(currentNote.id,title, body)
+                val note = Note(currentNote.id,title, body ,priority)
                 lifecycleScope.launch {
                     withContext(Dispatchers.Default){
                         notesViewModel.updateNote(note)

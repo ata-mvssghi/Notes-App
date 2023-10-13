@@ -1,16 +1,23 @@
 package com.example.noteapp.adapter
 
 import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.StrikethroughSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.TypedArrayUtils.getText
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noteapp.databinding.NoteLayoutBinding
-import com.example.noteapp.room.Note
 import com.example.noteapp.fragments.HomeFragmentDirections
+import com.example.noteapp.room.Note
+import com.example.noteapp.room.Priority
 import kotlin.random.Random
+
 
 class RecyclerViewAdapter:RecyclerView.Adapter<RecyclerViewAdapter.NoteViewHolder>() {
 
@@ -43,10 +50,28 @@ class RecyclerViewAdapter:RecyclerView.Adapter<RecyclerViewAdapter.NoteViewHolde
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val currentNote=differ.currentList[position]
        holder.binding.tvNoteBody.text=currentNote.noteBody
+        Log.i("note","discription=${currentNote.noteBody}")
         holder.binding.tvNoteTitle.text=currentNote.noteTitle
-        val random= Random.Default
-        val color= Color.argb(255,random.nextInt(256),random.nextInt(256),random.nextInt(256))
+        var color:Int = 1
+        if(currentNote.priority==Priority.HIGH)
+            color = Color.argb(255, 255, 0, 0)
+        else if(currentNote.priority==Priority.MEDIUM)
+            color = Color.argb(255, 0, 255, 0)
+        else if(currentNote.priority==Priority.LOW)
+            color = Color.argb(255, 255, 255, 0)
+
         holder.binding.ibColor.setBackgroundColor(color)
+        holder.binding.Done.setOnClickListener{
+           if(holder.binding.Done.isChecked){
+               val spannable: Spannable = SpannableString(holder.binding.tvNoteTitle.text)
+               spannable.setSpan(
+                   StrikethroughSpan(),
+                   0,
+                   spannable.length,
+                   Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+               )
+           }
+        }
         holder.itemView.setOnClickListener {
             val direction=HomeFragmentDirections.
             actionHomeFragmentToUpdateNoteFragment(currentNote)

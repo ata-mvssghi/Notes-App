@@ -63,11 +63,10 @@ class HomeFragment : Fragment() ,SearchView.OnQueryTextListener{
         binding.recyclerView.adapter=noteAdapter
         activity?.let {
             notesViewModel.getALlNotes().observe(viewLifecycleOwner
-                ,{
-                        notes->noteAdapter.differ.submitList(notes)
-                    updateUi(notes)
-                }
-            )
+            n) { notes ->
+                noteAdapter.differ.submitList(notes)
+                updateUi(notes)
+            }
         }
     }
 
@@ -116,9 +115,8 @@ class HomeFragment : Fragment() ,SearchView.OnQueryTextListener{
         if(query!=null) {
             val searchQuery = "%$query"
             notesViewModel.searchNote(searchQuery).observe(
-                this,
-                { list -> noteAdapter.differ.submitList(list.reversed()) }
-            )
+                this
+            ) { list -> noteAdapter.differ.submitList(list.reversed()) }
         }
     }
     override fun onDestroy() {

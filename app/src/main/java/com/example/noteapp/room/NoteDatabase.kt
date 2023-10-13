@@ -1,10 +1,14 @@
 package com.example.noteapp.room
 
 import android.content.Context
+import androidx.databinding.adapters.Converters
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-@Database(entities = [Note::class], version = 1)
+import androidx.room.TypeConverters
+
+@Database(entities = [Note::class], version = 2)
+@TypeConverters(PriorityConverter::class)
 abstract class NoteDatabase:RoomDatabase() {
     abstract val dao:NoteDAO
     companion object{
@@ -25,7 +29,8 @@ abstract class NoteDatabase:RoomDatabase() {
                 context.applicationContext,
                 NoteDatabase::class.java,
                 "note_db"
-            ).build()
+            ).fallbackToDestructiveMigration()
+                .build()
 
     }
 
