@@ -12,8 +12,8 @@ data class Note(
     val id : Int,
     val noteTitle : String,
     val noteBody : String,
-    val priority: Priority?= Priority.MEDIUM,
-    val isChecked:Boolean?=false
+    var priority: Priority?= Priority.MEDIUM,
+    var isChecked:Boolean?=false
 
 ): Serializable
 enum class Priority{

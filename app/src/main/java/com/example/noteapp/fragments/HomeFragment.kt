@@ -18,14 +18,16 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.noteapp.MainActivity
 import com.example.noteapp.R
 import com.example.noteapp.adapter.RecyclerViewAdapter
+import com.example.noteapp.adapter.UpdateNoteInterface
 import com.example.noteapp.databinding.FragmentHomeBinding
 import com.example.noteapp.room.Note
 import com.example.noteapp.viewModel.NoteViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeFragment : Fragment() ,SearchView.OnQueryTextListener{
+class HomeFragment : Fragment() ,SearchView.OnQueryTextListener,UpdateNoteInterface{
     var _binding:FragmentHomeBinding?=null
     val binding get()=_binding!!
     lateinit var notesViewModel: NoteViewModel
@@ -36,6 +38,7 @@ class HomeFragment : Fragment() ,SearchView.OnQueryTextListener{
     ): View? {
         // Inflate the layout for this fragment
         _binding= FragmentHomeBinding.inflate(inflater,container,false)
+        RecyclerViewAdapter.NoteUpdater.updateListner = this
         return binding.root
     }
 
@@ -63,7 +66,7 @@ class HomeFragment : Fragment() ,SearchView.OnQueryTextListener{
         binding.recyclerView.adapter=noteAdapter
         activity?.let {
             notesViewModel.getALlNotes().observe(viewLifecycleOwner
-            n) { notes ->
+            ) { notes ->
                 noteAdapter.differ.submitList(notes)
                 updateUi(notes)
             }
@@ -122,5 +125,11 @@ class HomeFragment : Fragment() ,SearchView.OnQueryTextListener{
     override fun onDestroy() {
         super.onDestroy()
         _binding=null
+    }
+
+    override fun checkOrUncheck(note: Note) {
+        CoroutineScope(Dispatchers.IO).launch {
+            notesViewModel.updateNote(note)
+        }
     }
 }

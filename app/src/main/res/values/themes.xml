@@ -31,4 +31,13 @@
     <style name="AppTheme.ForceDark" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>
     </style>
+    <style name="fabStyle1" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">30%</item>
+        <item name="cornerFamily">cut</item>
+    </style>
+    <style name="fabStyle2" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">50%</item>
+
+    </style>
+
 </resources>

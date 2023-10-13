@@ -1,13 +1,10 @@
 package com.example.noteapp.adapter
 
 import android.graphics.Color
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.StrikethroughSpan
+import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.res.TypedArrayUtils.getText
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -16,11 +13,12 @@ import com.example.noteapp.databinding.NoteLayoutBinding
 import com.example.noteapp.fragments.HomeFragmentDirections
 import com.example.noteapp.room.Note
 import com.example.noteapp.room.Priority
-import kotlin.random.Random
 
 
 class RecyclerViewAdapter:RecyclerView.Adapter<RecyclerViewAdapter.NoteViewHolder>() {
-
+    companion object NoteUpdater{
+        var updateListner : UpdateNoteInterface? =null
+    }
     inner class NoteViewHolder( val binding:NoteLayoutBinding):RecyclerView.ViewHolder(binding.root)
 
     private val differCallback = object : DiffUtil.ItemCallback<Note>(){
@@ -52,24 +50,35 @@ class RecyclerViewAdapter:RecyclerView.Adapter<RecyclerViewAdapter.NoteViewHolde
        holder.binding.tvNoteBody.text=currentNote.noteBody
         Log.i("note","discription=${currentNote.noteBody}")
         holder.binding.tvNoteTitle.text=currentNote.noteTitle
-        var color:Int = 1
+        var color = 1
         if(currentNote.priority==Priority.HIGH)
             color = Color.argb(255, 255, 0, 0)
         else if(currentNote.priority==Priority.MEDIUM)
             color = Color.argb(255, 0, 255, 0)
         else if(currentNote.priority==Priority.LOW)
             color = Color.argb(255, 255, 255, 0)
-
+        holder.binding.Done.isChecked = currentNote.isChecked ?: false
+        if(currentNote.isChecked == true){
+            holder.binding.tvNoteTitle.paintFlags = holder.binding.tvNoteTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            holder.binding.tvNoteBody.paintFlags = holder.binding.tvNoteBody.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        }
+        else{
+            holder.binding.tvNoteTitle.paintFlags= holder.binding.tvNoteTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            holder.binding.tvNoteBody.paintFlags= holder.binding.tvNoteBody.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+        }
         holder.binding.ibColor.setBackgroundColor(color)
         holder.binding.Done.setOnClickListener{
            if(holder.binding.Done.isChecked){
-               val spannable: Spannable = SpannableString(holder.binding.tvNoteTitle.text)
-               spannable.setSpan(
-                   StrikethroughSpan(),
-                   0,
-                   spannable.length,
-                   Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-               )
+               currentNote.isChecked = true
+               holder.binding.tvNoteTitle.paintFlags = holder.binding.tvNoteTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+               holder.binding.tvNoteBody.paintFlags = holder.binding.tvNoteBody.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+               updateListner?.checkOrUncheck(currentNote)
+           }
+            else{
+                currentNote.isChecked = false
+               holder.binding.tvNoteTitle.paintFlags= holder.binding.tvNoteTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+               holder.binding.tvNoteBody.paintFlags= holder.binding.tvNoteBody.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+               updateListner?.checkOrUncheck(currentNote)
            }
         }
         holder.itemView.setOnClickListener {
@@ -78,4 +87,7 @@ class RecyclerViewAdapter:RecyclerView.Adapter<RecyclerViewAdapter.NoteViewHolde
             it.findNavController().navigate(direction)
         }
     }
+}
+interface UpdateNoteInterface{
+    fun checkOrUncheck(note :Note)
 }
