@@ -16,10 +16,10 @@ data class Note(
     var isChecked:Boolean?=false
 
 ): Serializable
-enum class Priority{
-    HIGH,
-    MEDIUM,
-    LOW
+enum class Priority(val value: Int){
+    HIGH(1),
+    MEDIUM(2),
+    LOW(3)
 }
 class PriorityConverter {
 

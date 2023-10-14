@@ -8,5 +8,9 @@
         android:id="@+id/search"
         app:actionViewClass="androidx.appcompat.widget.SearchView">
     </item>
+    <item
+        android:id="@+id/action_delete_all"
+        android:title="Delete All"
+        app:showAsAction="never"/>
 
 </menu>

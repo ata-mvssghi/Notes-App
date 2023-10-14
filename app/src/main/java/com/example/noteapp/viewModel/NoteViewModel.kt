@@ -37,7 +37,7 @@ class NoteViewModel(
     }
 
     fun getALlNotes()=noteRepository.selectALlNotes()
-
+    fun deleteAllNotes() = noteRepository.deleteAllNotes()
     fun searchNote(query:String?)=
         noteRepository.searchNote(query)
 

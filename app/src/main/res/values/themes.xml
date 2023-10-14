@@ -14,7 +14,6 @@
         <item name="android:textColor">#F2136873</item>
 
     </style>
-
     <style name="Base" parent="Base.Theme.Project" />
     <style name="Colorful" parent="Theme.MaterialComponents.DayNight">
         <item name="colorPrimary">#DBC89D</item>

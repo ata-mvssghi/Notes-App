@@ -9,6 +9,13 @@
     <PreferenceCategory android:title="TEXT"
         app:icon="@drawable/baseline_settings_suggest_24">
         <ListPreference
+            android:title="ORDER"
+            app:entries="@array/order"
+            android:entryValues="@array/order"
+            android:key="order"
+            app:useSimpleSummaryProvider="true"
+            app:defaultValue="By Date"/>
+        <ListPreference
             app:entries="@array/text_size"
             app:entryValues="@array/text_size"
             app:key="text_size"

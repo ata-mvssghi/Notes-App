@@ -7,6 +7,11 @@
         <item>Large</item>
         <item>Very large</item>
     </string-array>
+    <string-array name="order">
+        <item>Ascending Importance</item>
+        <item>By Date</item>
+        <item>Descending Importance</item>
+    </string-array>
     <string-array name="theme_list">
         <item>Light</item>
         <item>Dark</item>

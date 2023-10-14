@@ -2,6 +2,7 @@ package com.example.noteapp.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
@@ -78,13 +79,13 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
         }
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.radioButtonHigh -> {
+                R.id.radioButtonHighU -> {
                     priority = Priority.HIGH
                 }
-                R.id.radioButtonMedium -> {
+                R.id.radioButtonMediumU -> {
                     priority = Priority.MEDIUM
                 }
-                R.id.radioButtonLow -> {
+                R.id.radioButtonLowU -> {
                     priority = Priority.LOW
                 }
             }
@@ -98,9 +99,10 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
                 lifecycleScope.launch {
                     withContext(Dispatchers.Default){
                         notesViewModel.updateNote(note)
+                        Log.i("note","note updated! and the priorty = $priority")
                     }
                 }
-                view.findNavController().navigate(R.id.action_updateNoteFragment_to_homeFragment)
+                view.findNavController().popBackStack()
             }else{
                 Toast.makeText(
                     context,
@@ -118,9 +120,7 @@ class UpdateNoteFragment : Fragment(R.layout.fragment_update_note) {
             setPositiveButton("Delete"){_,_ ->
                 notesViewModel.deleteNote(currentNote)
 
-                view?.findNavController()?.navigate(
-                    R.id.action_updateNoteFragment_to_homeFragment
-                )
+                view?.findNavController()?.popBackStack()
             }
             setNegativeButton("Cancel", null)
         }.create().show()

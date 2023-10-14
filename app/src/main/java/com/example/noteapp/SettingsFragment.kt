@@ -11,6 +11,7 @@ import com.example.noteapp.SettingsFragment.ThemeChangingInstance.themeChangeLis
 class SettingsFragment : PreferenceFragmentCompat() {
     var previousTheme:String?="init"
     var previousFont:String?="init"
+    var previousOrder:String?="init"
     companion object {
         var fontScaleChangedListener: FontScaleChangedListener? = null
     }
@@ -23,6 +24,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val sp = PreferenceManager.getDefaultSharedPreferences(requireContext())
         previousTheme=sp.getString("color_theme","Light")
         previousFont=sp.getString("text_size","Medium")
+        previousOrder = sp.getString("order","By Date")
         val backButtonPreference: Preference? = findPreference("backButton")
 
         backButtonPreference?.setOnPreferenceClickListener {
@@ -36,6 +38,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val sp =PreferenceManager.getDefaultSharedPreferences(requireContext())
         val selectedTextSizePreference = sp.getString("text_size", "Medium")
         val selectedTheme:String?=sp.getString("color_theme","Light")
+        val order = sp.getString("order","By Date")
 
         if (selectedTextSizePreference != null&&selectedTextSizePreference!=previousFont) {
             onTextSizePreferenceChanged(selectedTextSizePreference)
@@ -43,6 +46,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
         if(selectedTheme!=null&&selectedTheme!=previousTheme){
             themeChangeListener?.onThemeChanged(selectedTheme)
             Log.i("remote","theme is cahnged and changed theme is =$selectedTheme")
+        }
+        if(order!=null && order!=previousOrder){
+
         }
     }
     fun onTextSizePreferenceChanged(selectedTextSizePreference: String) {

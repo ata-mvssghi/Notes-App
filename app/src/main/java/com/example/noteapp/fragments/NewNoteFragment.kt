@@ -90,7 +90,7 @@ class NewNoteFragment : Fragment(R.layout.fragment_new_note) {
             Toast.makeText(mView.context,
                 "Note Saved Successfully",
                 Toast.LENGTH_LONG).show()
-            view.findNavController().navigate(R.id.action_newNoteFragment_to_homeFragment)
+            view.findNavController().popBackStack()
         }
         else{
             Toast.makeText(
