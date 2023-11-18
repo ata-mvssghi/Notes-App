@@ -1,6 +1,13 @@
 # SimpleNote Android App
 
 Welcome to SimpleNote, a minimalist Android app designed for hassle-free note-taking. This app allows users to easily create, update, and delete notes, providing a straightforward solution for organizing your thoughts on the go.
+![Screenshot_2023-10-14-22-55-48-436_com example noteapp (1)](https://github.com/ata-mvssghi/Notes-App/assets/99190904/b53fc7b3-fe9f-4e45-9d5c-c5d3d15ab0e9)
+
+![Screenshot_2023-10-14-22-55-57-078_com example noteapp (1)](https://github.com/ata-mvssghi/Notes-App/assets/99190904/7a77400b-75a3-44e0-b345-8e4827c2c4b0)
+
+![Screenshot_2023-10-14-22-56-02-256_com example noteapp (1)](https://github.com/ata-mvssghi/Notes-App/assets/99190904/61b025f3-9dd0-45ba-b759-99e6884217c5)
+
+![Screenshot_2023-10-14-22-53-37-783_com example noteapp (1)](https://github.com/ata-mvssghi/Notes-App/assets/99190904/caa30123-4b5b-4cfb-bb3d-f1ce5baa28fa)
 
 ## Features
 
